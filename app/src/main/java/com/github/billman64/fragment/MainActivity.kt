@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,9 +29,6 @@ class MainActivity : FragmentActivity(R.layout.activity_main) {
     // Tip: ComponentActivity would not work with a fragment. Use a different type of activity, such as FragmentActivity or AppCompatActivity, instead.
 
     private val TAG: String = "FD-MainActivity"
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(TAG, "onCreate()")
@@ -47,27 +45,31 @@ class MainActivity : FragmentActivity(R.layout.activity_main) {
 
         // create object for fragment
         var fr: Fragment
+        var animEnter = R.anim.fade_translate_down  // default custom animation
 
         // display fragment 1, if button1 is clicked
         if(view == findViewById(R.id.button1)){
             fr = FragmentOne()
             val btn1: Button = findViewById(R.id.button1)
             val btn2: Button = findViewById(R.id.button2)
+
 //            btn1.setBackgroundColor(Color.YELLOW) //TODO: highlight button associated with currently selected fragment, but need to find way to get non-highlighted button color
 //            btn2.setBackgroundColor(Color.GRAY)
         }
         // display fragment2, if button2
         else {
             fr = FragmentTwo()
+            animEnter = R.anim.fade_translate_up    // custom animation for FragmentTwo
         }
 
         // add/replace fragment
         val fm:FragmentManager = supportFragmentManager     // supportFragmentManager needed to initialize
         val fragmentTransaction:FragmentTransaction  = fm.beginTransaction()
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)    // Standardized fragment animation
+            .setCustomAnimations(animEnter, 0)
+//        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)    // Standardized fragment animation
         fragmentTransaction.replace(R.id.fragment_section, fr)
         fragmentTransaction.commit()
 
-        //TODO: animate fragment transition, with custom animation, for visual effect - https://developer.android.com/guide/fragments/animate
+        //animate fragment transition, with custom animation, for visual effect - https://developer.android.com/guide/fragments/animate or https://riptutorial.com/android/example/19883/animate-the-transition-between-fragments
     }
 }

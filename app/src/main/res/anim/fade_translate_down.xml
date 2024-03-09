@@ -3,18 +3,18 @@
     <alpha
         android:fromAlpha="0.0"
         android:toAlpha="1.0"
-        android:duration="100" />
+        android:duration="300" />
 
     <translate
         android:fromYDelta="-10%"
         android:toYDelta="0%"
-        android:duration="100" />
+        android:duration="300" />
 
     <scale
         android:fromXScale="10%"
         android:toXScale="100%"
         android:fromYScale="10%"
         android:toYScale="100%"
-        android:duration="100" />
+        android:duration="300" />
 
 </set>
