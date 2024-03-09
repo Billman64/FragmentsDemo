@@ -1,8 +1,12 @@
 package com.github.billman64.fragment
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,16 +29,21 @@ class MainActivity : FragmentActivity(R.layout.activity_main) {
 
     private val TAG: String = "FD-MainActivity"
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(TAG, "onCreate()")
 
         // setContentView() not needed here, since the layout can be defined in the constructor of a FragmentActivity or AppCompatActivity, thanks to AndroidX.
 
+        val btn1:Button = findViewById(R.id.button1)
+        val defaultButtonColor = btn1.background
+        Log.d(TAG, "button color: $defaultButtonColor")
     }
 
     fun selectFragment(view: View) {
-        Log.d(TAG, "button clicked")
+        Log.d(TAG, "button "+ view.id +" tapped")
 
         // create object for fragment
         var fr: Fragment
@@ -42,6 +51,10 @@ class MainActivity : FragmentActivity(R.layout.activity_main) {
         // display fragment 1, if button1 is clicked
         if(view == findViewById(R.id.button1)){
             fr = FragmentOne()
+            val btn1: Button = findViewById(R.id.button1)
+            val btn2: Button = findViewById(R.id.button2)
+//            btn1.setBackgroundColor(Color.YELLOW) //TODO: highlight button associated with currently selected fragment, but need to find way to get non-highlighted button color
+//            btn2.setBackgroundColor(Color.GRAY)
         }
         // display fragment2, if button2
         else {
@@ -51,28 +64,10 @@ class MainActivity : FragmentActivity(R.layout.activity_main) {
         // add/replace fragment
         val fm:FragmentManager = supportFragmentManager     // supportFragmentManager needed to initialize
         val fragmentTransaction:FragmentTransaction  = fm.beginTransaction()
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)    // Standardized fragment animation
         fragmentTransaction.replace(R.id.fragment_section, fr)
         fragmentTransaction.commit()
 
-        //TODO: animate fragment transition for visual effect - https://developer.android.com/guide/fragments/animate
+        //TODO: animate fragment transition, with custom animation, for visual effect - https://developer.android.com/guide/fragments/animate
     }
 }
-
-
-
-
-//@Composable
-//fun Greeting(name: String, modifier: Modifier = Modifier) {
-//    Text(
-//        text = "Hello $name!",
-//        modifier = modifier
-//    )
-//}
-
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    FragmentTheme {
-//        Greeting("Android")
-//    }
-//}
