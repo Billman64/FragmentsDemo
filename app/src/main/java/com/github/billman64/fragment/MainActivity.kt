@@ -68,6 +68,7 @@ class MainActivity : FragmentActivity(R.layout.activity_main) {
             .setCustomAnimations(animEnter, 0)
 //        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)    // Standardized fragment animation
         fragmentTransaction.replace(R.id.fragment_section, fr)
+            .addToBackStack(null)
         fragmentTransaction.commit()
 
         //animate fragment transition, with custom animation, for visual effect - https://developer.android.com/guide/fragments/animate or https://riptutorial.com/android/example/19883/animate-the-transition-between-fragments
